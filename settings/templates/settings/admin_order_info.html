@@ -1,0 +1,28 @@
+{% extends 'settings/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+      Пользователь: {{ order.user }}
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">Время заказа: {{ order.datetime }}</a>
+    <a href="#" class="list-group-item list-group-item-action">Цена заказа: {{ order.price }}р</a>
+    <a href="#" class="{{ order.status.color }} list-group-item list-group-item-action">Статус: {{ order.status.title }}</a>
+    <a href="#" class="list-group-item list-group-item-action">Адрес доставки: {{ order.adress }}</a>
+  </div>
+<ol class="list-group list-group-numbered">
+    {% for product in order.products %}
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">{{ product.title }}</div>
+      </div>
+      <span class="badge bg-primary rounded-pill">Количество: {{ product.count }}</span>
+    </li>
+    {% endfor %}
+
+  </ol>
+  {% if order.status.is_next %}
+  <a href="{{ order.status.next_url }}" class="btn {{ order.status.next_color }}">{{ order.status.next_title }}</a>
+  {% endif %}
+  {% endblock %}
